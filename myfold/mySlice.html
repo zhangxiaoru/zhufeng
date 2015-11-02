@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    Array.prototype.mySlice = function mySlice(n,m){
+        if (typeof m === "undefined") {
+            m=this.length;
+        }
+        n=n<0?n+this.length:n;
+        m=m<0?m+this.length:m;
+        var obj=[];
+        if(n>m){
+            return obj;
+        }
+        for(var i=n;i<m;i++){
+            obj[obj.length]=this[i];
+        }
+        return obj;
+    }
+    var ary = [1,6,8,52,9,4,6,7,1];
+    var res = ary.mySlice(-6,6);
+    console.log(res);
+</script>
+</body>
+</html>
