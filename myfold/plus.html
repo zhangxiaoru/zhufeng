@@ -6,7 +6,11 @@
 </head>
 <body>
 <script type="text/javascript">
+
     Number.prototype.myPlus = function myPlus(num) {
+        if (isNaN(num)) {
+            num = 0;
+        }
         var num1 = Number(this);
         var num2 = Number(num);
         var sum = null;
@@ -15,6 +19,9 @@
         return Number(sum.toFixed(2));
     };
     Number.prototype.myMinus = function myMinus(num) {
+        if (isNaN(num)) {
+            num = 0;
+        }
         var num1 = Number(this);
         var num2 = Number(num);
         var sum = null;
@@ -23,7 +30,7 @@
         return Number(sum.toFixed(2));
     };
     var num = 0.1;
-    var sum = num.myPlus(-0.222).myMinus(-10);
+    var sum = num.myPlus("d").myMinus("f");
     console.log(sum);
 
 

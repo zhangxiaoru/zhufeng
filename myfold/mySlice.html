@@ -6,23 +6,34 @@
 </head>
 <body>
 <script type="text/javascript">
-    Array.prototype.mySlice = function mySlice(n,m){
-        if (typeof m === "undefined") {
-            m=this.length;
+    Array.prototype.mySlice = function mySlice(n, m) {
+        var obj = [];
+        if (isNaN(n)) {
+            n = 0;
         }
-        n=n<0?n+this.length:n;
-        m=m<0?m+this.length:m;
-        var obj=[];
-        if(n>m){
+        if (typeof m === "undefined") {
+            m = this.length;
+        } else {
+            if (isNaN(m)) {
+                return obj;
+            }
+        }
+        n = n < 0 ? n + this.length : n;
+        m = m < 0 ? m + this.length : m;
+
+        m = m > this.length ? this.length : m;
+
+        if (n > m) {
             return obj;
         }
-        for(var i=n;i<m;i++){
-            obj[obj.length]=this[i];
+        for (var i = n; i < m; i++) {
+            obj[obj.length] = this[i];
         }
         return obj;
     }
-    var ary = [1,6,8,52,9,4,6,7,1];
-    var res = ary.mySlice(-6,6);
+    var ary = [1, 6, 8, 52, 9, 4, 6, 7, 1];
+    var res = ary.mySlice(10, 11);
+    console.log(ary);
     console.log(res);
 </script>
 </body>
