@@ -198,3 +198,5 @@
     setInterval设置一次只是一个定时器，执行多次用的都是同一个，所以返回值是不变的
 
     window.clearInterval() / window.clearTimeout() 清除定时器  timer=null
+
+10、
