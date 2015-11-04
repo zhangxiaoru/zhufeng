@@ -1,0 +1,303 @@
+10.31-11.1
+
+
+1、预解释
+    1)预解释(变量提升(声)):
+        在当前作用域中，JS代码从上到下执行之前，首先会把所有带var和function关键字的进行提前的声明或者定义
+        var num=12;
+        声明(declare): var num; 只是声明没有定义，变量的默认值是undefined
+        定义(defined): num=12; 其实就是相当于给它赋值
+
+    2)带var和带function关键字的在预解释的时候是不一样的
+        var的是预解释的时候，只是提前的声明
+        function的是预解释的时候，把声明和定义都完成了
+
+    3)私有作用域中的预解释:
+        函数执行形成一个私有的作用域
+            1.给形参赋值
+            2.私有作用域下的预解释
+            3.私有作用域中的代码执行
+
+        在私有作用域中遇到一个变量，我们首先看是否为私有的变量，如果是私有的，就受到了保护(闭包)，不受外界的干扰
+        如果不是私有的，则往上一级作用域进行查找
+
+    4)不管条件是否成立都要进行预解释
+        window预解释:var num; num是全局变量，"在全局作用域下"声明的变量也相当于给window增加了一个属性名                 window.num=undefined;
+            if (!("num" in window)) {//"num" in window ->true
+                 var num = 12;
+            }
+            console.log(num);//-->undefined
+
+    5)预解释只发生在"="的左边，右边是一个值，是不进行预解释的
+
+    6)
+            匿名函数(没有函数名)
+        1.函数表达式-->把函数当做一个值赋值给其他的内容
+        2.自执行函数-->定义和执行一起完成的函数
+            ;(function(num){})(100);
+            ~function(num){}(100);
+            !function(num){}(100);
+            +function(num){}(100);
+            -function(num){}(100);
+        3.自执行函数在window下预解释的时候是不进行预解释的-->function是不进行预解释的
+            ;(function (num) {
+                当自执行函数执行的时候，形成一个私有作用域，在私有作用域中的操作:
+                形参赋值
+                预解释
+                代码执行
+            })(100);
+
+        4.关于函数中的预解释
+            return "下面"的代码不执行，但是要进行预解释
+            return "后面"的是返回的值，所以不参与预解释
+
+        5.关于名字重了(变量的名字如果和函数名相同也算重复了)
+            在预解释的时候，如果遇到名字重复了，不重新的声明，但是需要重新的定义
+
+    7)带var和不带var的区别:不加的不能提前的进行预解释
+        在全局作用域下:
+            num=12; //->window.num=12;
+            var num=12; ->window.num=12;
+
+            console.log(num);//->undefined
+            var num = 12;
+            console.log(num);//->12
+
+            console.log(num);//->Uncaught ReferenceError: num is not defined  num这个变量不存在
+            num = 12;
+            console.log(num);//->12
+
+        在私有的作用域中:
+            function fn() {
+                //console.log(num);//ReferenceError: num is not defined 在私有作用域中我们使用一个变量，                如果不是私有的变量，则向上一级作用域进行查找，如果上一级没有则继续向上查找，一直找到window为止，如果全               //局也没有:
+                //我们是获取的话，会报错
+                //我们是设置值的话，相当于给全局增加一个num的属性名，属性值是13 -->window.num=13
+                //        num = 13;//-->window.num=13;
+                //        console.log(num);//-->13
+            }
+            fn();
+            console.log(num);//-->13
+
+2、作用域
+
+    1)查找其上级作用域?
+        看当前函数是在哪个作用域下定义的，那么当前函数的上级作用域就是谁
+        上级作用域是谁和在哪执行的没有关系，只和在哪定义的有关系
+            var num = 12;
+            function fn() {
+                var num = 100;
+                return function () {
+                    console.log(num);
+                }
+            }
+            var f = fn();
+            f();//->100
+
+3、浏览器内置的内存回收机制(谷歌)
+
+    [堆内存]：如果没有被占用，则会被销毁；如果被占用则销毁不了；
+    [栈内存]：(作用域)
+            [全局作用域]
+            只有在当前页面关闭的时候，我们的全局作用域才会销毁
+
+    [私有作用域]
+        1.一般情况下，当我们的函数执行形成了一个私有作用域，当函数执行完成后，开始形成的这个私有作用域都会"立即销毁"
+        2.当函数执行形成一个私有的作用域，里面的一部分内容被作用域以外的其他的东西占用了，那么当前的这个私有作用域就"不          能销毁"了-->最直接的体现是里面的私有的变量也不在销毁了
+            具体的表现形式:
+            函数执行，形成一个私有的作用域(A)，在A中返回了一个引用数据类型值，并且在A的外面被其他的东西给接受了，                这样的话A就不能再销毁了
+        3.函数执行形成个私有的作用域A，返回一个堆内存的地址，紧接着让这个堆内存在运行，这种情况下，A外面没有其他的东西知          道地址，我们只需要把返回的内容执行一次后，就可以销毁A这个作用域了-->"不立即销毁"
+              function fn() {
+                var num = 12;
+                return function () {
+
+                }
+              }
+              fn()();//先fn()执行，获取到一个地址(对应的是里面的小函数)，然后紧接着让里面的小函数在执行
+
+4、this
+
+    1)只有函数执行后我们才知道执行的主体是谁
+       函数名(); -->看函数名前面是否有"."，有的话点前面是谁this就是谁,没有的话this就是window
+
+    2)自执行函数执行，不管在哪执行的，里面的this永远是window
+        ~function(){}();
+
+    3)元素的某一个事件绑定一个方法，当我们事件触发的时候，执行对应的方法，并且方法中的this是当前的这个元素
+        //oDiv.onclick=function(){}; 首先把函数对应的堆内存的地址赋值给oDiv的onclick事件(事件绑定)，当我们的         click行为发生的时候，会把绑定的这个函数执行
+
+     4) 在构造函数模式创建一个类的时候，方法执行，里面的this(this.xxx=xxx)其实就是我们当前类的一个实例
+
+5、模式
+
+    1)JS中的类包含两大类
+        //内置类:
+        //Object(对象类，每一个对象数据类型都是它的一个实例)
+        //Array、RegExp、Date、Math、Number、String、Boolean、Null、Undefined、Function...
+
+        //Window(浏览器对象类,window就是它的一个实例)、Document、HTMLDivElement(每一个div都是它的一个实例,并且基本上每一个HTML标签都有自己所属的类)、HTMLElement、Element、Node、EventTarget
+
+        //HTMLCollection(元素集合类) getElementsByTagName获取的集合就是它的一个实例
+        //NodeList(节点集合类) getElementsByName获取的集合就是它的一个实例
+
+        //CSSStyleDeclaration(样式信息描述类，每一个元素的style就是它的一个实例)
+        //DOMTokenList、DOMStringMap...
+
+
+        //自定义类:
+
+
+
+    1.单例模式：作为一个整体对象，但效率低，不能实现批量
+    2.工厂模式：可以批量生产，但没有自己的个性
+        JS中的多态指的是一个方法的多种形态
+        同一个方法根据执行时候传递参数的不同(值不同,类型不同,有的传了有的没传...)我们实现了不一样的功能操作-->JS的多态
+
+        JS中有重载吗? ->不存在
+              JS中存在重写
+                  function fn(name){
+                  }
+                  function fn(name,age){
+                  }
+                  fn("");
+
+    3.构造函数模式
+
+        var obj = {};//字面量方式
+        var obj = new Object();//实例创建-->通过new创建了Object这个类的一个实例
+        构造函数模式:通过new一个类来创建一个实例
+
+        构造函数模式和工厂模式的区别:
+            一般情况下，我们如果是通过构造函数模式来创建一个类的话，我们的类名的第一个字母要大写(这不是规范而是大家约定              俗称的一个规律)
+            1)在执行的时候，我们的构造函数模式是通过 new CreateJsPerson() 来执行的-->我们把CreateJsPerson称之               为一个类，而通过类创建出来的结果(p1)就是当前类的一个实例
+            2)类也是一个函数，所以也会像普通函数执行一样:形成一个私有的所用域,形参赋值,预解释,代码从上到下执行
+            但是构造函数模式在代码执行之前，浏览器默认首先会创建一个对象数据类型的值(不用自己手动的进行创建了)，并且会              默认的把这个对象数据类型的值进行返回(不用自己手动的return返回了)
+            3)把浏览器默认创建的那个对象当做当前函数执行的整体(this)，然后通过this.xxx=xxx这种方式给默认创建的对象               增加属性名和属性值
+            浏览器默认创建的这个对象其实就是我们当前类的一个实例
+            在构造函数模式创建一个类的时候，方法执行，里面的this(this.xxx=xxx)其实就是我们当前类的一个实例                    -->this的第四种情况
+
+        我们在类的函数体中通过this.xxx=xxx给实例增加的属性都是当前实例的私有的属性
+
+        类都是函数数据类型的
+        console.log(typeof CreateJsPerson);//-->"function"
+        类创建出来的实例都是对象数据类型的
+        console.log(typeof p1);//-->"object"
+
+    4.原型模式:构造函数模式虽然解决了实例识别的问题，但是对于不同的实例来说，不是所有的属性都应该是私有，部分属性和方法应该是公用的才对
+
+        基于构造函数模式的原型链模式:
+
+        function CreateJsPerson(name) {
+                this.name = name;
+                this.fn = function () {
+                };
+            }
+            CreateJsPerson.prototype.writeJs = function () {
+                console.log("my name is " + this.name + "，i can write javascript 啦~~");
+            };
+            CreateJsPerson.prototype.fn = function () {
+            };
+            var p1 = new CreateJsPerson("杨玲玲");
+            var p2 = new CreateJsPerson("董久成");
+
+            console.log(p1.writeJs === p2.writeJs);//-->true
+            console.log(p1.fn === p2.fn);//-->false
+            console.log(p1.__proto__.fn === p2.__proto__.fn);//-->true
+            console.log(p1.fn === CreateJsPerson.prototype.fn);//-->false
+
+
+            //接下来的每一句话都是规定，不要问我为什么
+            1.所有的函数数据类型(实名函数、匿名函数、类)都天生自带一个属性:prototype(原型),并且这个属性对应的属性值              是一个对象数据类型的,浏览器会默认的给它开辟一个堆内存
+              函数原型的作用：存储类中所有公有的属性和方法
+
+            2.在浏览器默认给prototype开辟的堆内存中有一个天生自带的属性constructor,存储的值是当前函数本身
+                console.log(CreateJsPerson.prototype.constructor === CreateJsPerson);//-->true
+
+            3.每一个对象数据类型(普通对象、数组、正则、时间、实例、函数的prototype属性...)都有一个天生自带的属性                  :__proto__(IE浏览器也存在这个属性但是给保护起来屏蔽掉了,不允许我们自己使用)
+              __proto__这个属性指向的是当前对象所属类的原型，例如：
+              console.log(p1.__proto__ === CreateJsPerson.prototype);//-->true
+
+            4.查找过程-->原型链模式
+                每一个实例在使用自己的属性和方法的时候，首先先找自己的私有属性，私有属性中存在就不在查找了,我们使用的                 就是私有的属性和方法;私有的如果不存在，浏览器默认根据__proto__找所属类prototype上的公有的属性和方法               ,如果公有中存在,则使用公有的;如果公有的还没有,则继续同过__proto__往上找,一直找到Object                         .prototype为止;
+                p1.writeJs === p1.__proto__.writeJs;
+                p1.writeJs 先找私有的，私有的没有才找的公有的
+                p1.__proto__.writeJs 直接找公有的
+
+                都是查找的所属类原型上公有的方法
+                p1.writeJs === p2.writeJs;
+                p1.__proto__.writeJs === p2.writeJs;
+                p1.writeJs === CreateJsPerson.prototype.writeJs;
+
+                constructor实现数据类型的检测
+                p1.constructor === CreateJsPerson;
+                var ary=[];
+                ary.constructor===Array 结果如果是true说明ary是Array这个类的一个实例,等价于我们的instanceof
+
+                p1.hasOwnProperty --> p1.__proto__.__proto__.hasOwnProperty --> Object.prototype                  .hasOwnProperty
+
+6、原型中的this问题
+
+    关于this的查找问题
+    1、Fn这个类中this.xxx=xxx中的this是当前Fn的一个实例
+    2、Fn类中某些方法中的this(例如:sum这个公共方法中的this)
+        1)首先看sum这个方法执行前有没".","."前面是谁,那么sum中的this就是谁
+        2)执行sum中的代码,然后把this是谁用代码给描述出来
+        3)按照原型的查找机制分析结果即可
+
+7、批量设置共有属性
+
+    第一种方案：给Fn.prototype起一个简短的名字，然后接下来用简短的名字来实现增加属性和方法
+        function Fn() {
+        }
+        var pro = Fn.prototype;
+        pro.a = function () {
+
+         };
+
+    第二种方案：自己编写一个对象把浏览器默认给prototype开辟的那个对象给覆盖掉
+        function Fn() {
+
+        }
+        Fn.prototype.a = function () {
+            console.log(1);
+        };
+        Fn.prototype = {
+            constructor: Fn,
+            b: function () {
+                console.log(2);
+            },
+            c: function () {
+                console.log(3);
+            }
+        };
+        var f = new Fn;
+        f.a();  报错,a被覆盖掉了
+        f.b();
+        f.c();
+        console.log(f.constructor);//-->Object 在没有手动添加constructor: Fn的时候，如果增加了输出的结果是Fn
+
+         1.只有浏览器天生给Fn.prototype开辟的那个堆内存才存在constructor，我们自己开辟的这个堆内存是不会自己创建constructor
+            我们在使用这种方式设置的时候，一定要记住手动的给堆内存中添加constructor，指向函数本身
+
+         2.在使用第二种方法批量设置公有属性方法的时候，我们发现会把之前已经写在prototype上的所有的方法给覆盖掉(需要我们特别注意的)
+
+8、原型继承
+
+    子类继承父类
+    function A() {
+            this.x = 100;
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    function B() {
+        this.x = 200;
+    }
+    B也想有getX，发现A已经实现了，那么我们只需要把A中的getX继承归来用就可以了
+    A的实例可以使用getX方法，所以我们的B如果想继承A的方法，只需要让B的原型指向A的一个实例即可-->原型继承
+    结果：把A中私有的和公有的都赋值给了B中的公有的
+
+    B.prototype = new A;
+    var b = new B;
+
+    b.getX();//也是通过__proto__一直查找，找到A的原型上的getX并且执行-->B继承A，不是把A的东西复制一份过来，而是用    的时候利用原型链的查找机制进行查找使用--> this是b  console.log(b.x) --> 200
