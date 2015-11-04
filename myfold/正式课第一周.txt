@@ -301,3 +301,17 @@
     var b = new B;
 
     b.getX();//也是通过__proto__一直查找，找到A的原型上的getX并且执行-->B继承A，不是把A的东西复制一份过来，而是用    的时候利用原型链的查找机制进行查找使用--> this是b  console.log(b.x) --> 200
+
+    在B的原型上扩展一个叫做haha的方法-->对父类A的其他实例没有任何的影响
+        B.prototype.haha=function(){
+
+        };
+
+    子类B同过原型链找到了父类A的原型，在里面增加了hehe，这样A的其他实例也会受到影响
+    B.prototype.__proto__.hehe=function(){
+
+    };
+    重改父类中的getX的方法-->类的重写
+    B.prototype.__proto__.getX=function(){
+
+    };
