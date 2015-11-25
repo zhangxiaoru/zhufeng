@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        //不会改变原来的值
+
+        //基本数据类型：String ,Boolean,null,undefined,Number
+        //引用数据类型：Object
+        var num1=1;
+        var num2=num1;
+        num2=2;
+
+        //alert(num1);
+
+        //会改变原对象的值
+        var obj1={name:"zfpx"};
+        var obj2=obj1;
+        obj2.name="lhj";
+        //alert(obj1.name);
+
+        var obj2={name:"zfpx"};
+
+        alert(obj1.name);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

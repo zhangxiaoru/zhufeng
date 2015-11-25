@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        table{width: 500px;border:1px solid #ccc;}
+        td{height: 30px;border-collapse: collapse;
+            border:1px solid #ccc;}
+
+    </style>
+
+</head>
+<body>
+    <table border="1" cellpadding="0" cellspacing="0">
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+        <tr class="tr">
+            <td class="td"></td>
+        </tr>
+
+    </table>
+</body>
+    <script>
+        var oTrs=document.getElementsByTagName("tr");
+
+        console.dir(oTrs);
+//        get
+//        element
+//        by
+//        TagName:标签名
+
+
+        for(var i=0;i<oTrs.length;i++){
+            var oTr=oTrs[i];//打出的是第i+1行
+            if(i%3==0){
+                oTr.style.background="#eee";
+            }else if(i%3==1){
+                oTr.style.background="#ddd";
+            }else{
+                oTr.style.background="#ccc";
+            }
+        }
+    </script>
+</html>

@@ -1,0 +1,39 @@
+1.Javascript
+
+    javascript：诞生于1995年
+
+        表单校验：最开始通过后台校验
+
+        javascript：前台校验
+
+
+    javascript:
+        1.基础操作：
+            变量定义\语法规范\运算计算\逻辑控制\对象
+
+        2.浏览器操作（javascript特有功能）
+
+        3.元素操作（javascript进行操作）
+            新建元素添加页面\移除页面\修改样式
+            动画\特效
+
+
+        4.移动端
+        5.nodejs
+
+    javascript不能做什么：
+
+        1.对文件的操作
+        2.搭建服务器
+        3.数据库操作（html5提供对数据库的访问）
+        4.其他：人脸识别，机器学习，大型算法
+
+2.javascript包含哪些部分（重点）：
+
+    1.bom(bowser object model):浏览器对象模型
+
+    2.dom(document object model):文档对象模型
+
+    3.ecmascript：
+
+         变量定义\语法规范\运算计算\逻辑控制\对象……

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html,body ul{
+            height: 100%;
+            width: 100%;
+            display: table;
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+        body{
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .trap{
+            margin:0px auto;
+            text-align: left;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .trap span{
+            display: inline-block;
+            text-align: center;
+            width: 80px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="trap">
+    <ul class="chengfabiao"></ul>
+</div>
+<script TYPE="text/javascript">
+    var str="";
+    for(var i=1;i<=9;i++){
+        str+="<li>";
+        for(var j=1;j<=i;j++){
+            str+="<span>"+j+"*"+i+"</span>";
+        }
+        str+="</li>";
+    }
+    document.querySelector(".chengfabiao").innerHTML=str
+
+    var rows = document.getElementsByTagName("span");
+//    for(var i=0;row = rows[i++];){
+//        var k=i-1;
+//        if(!(k%3)){
+//            row.style.background="red";
+//        }else if(k%3==1){
+//            row.style.background="green";
+//        }else{
+//            row.style.background="yellow";
+//        }
+//    }
+    for(var i=0;i<rows.length;i++){
+        if(!(i%3)){
+            rows[i].style.background="red";
+        }else if(i%3==1){
+            rows[i].style.background="green";
+        }else{
+            rows[i].style.background="yellow";
+        }
+    }
+</script>
+</body>
+</html>

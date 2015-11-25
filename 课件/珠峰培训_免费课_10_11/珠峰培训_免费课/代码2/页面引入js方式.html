@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .test{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+
+</head>
+<body>
+<!--1、行内引入js方法1-->
+<!--<div class="test" onclick="alert(&quot;zfpx&quot;)"></div>-->
+<!--1、行内引入js方法2-->
+<div class="test"
+     <!--onclick="alert('zfpx')"-->
+        ></div>
+</body>
+<!--2.页内引入js方法-->
+<!--<script>-->
+    <!--alert("zfpx");-->
+<!--</script>-->
+
+
+<!--3.标签引入外部js方法-->
+<!--<script src="js/js.js"></script>-->
+
+
+<!--</html>-->
+
+<!--4.动态引入外部js方法-->
+<!--defer="defer"：把标签延迟到页面加载完毕时候加载-->
+<!--async="async": 异步执行 -->
+<script defer="defer" async="async">
+    //document:文档对象
+
+//    var script=document.createElement("script");
+//    createElement:
+//        create:创建
+//        element:元素
+
+//    script.src="js/js.js";
+    //documentElement:指向html标签
+    //document.body:指向body标签
+//    document.documentElement.appendChild(script);
+
+    alert(1);
+</script>
+
+<script>
+    alert(2);
+</script>
+
+</html>

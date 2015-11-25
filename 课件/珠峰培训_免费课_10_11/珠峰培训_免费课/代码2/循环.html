@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+
+</body>
+    <script>
+        var a=1;
+
+        //第一种循环方法：
+        //定义区：定义变量
+        //判断区: 判断条件返回值，如果是true,执行操作区代码，否则退出循环
+        //执行区：{}，执行区执行完毕以后，执行操作区代码
+        //操作区：
+
+        var arr=[null,undefined,"string",true,1 ];
+//        for(var i= 0,len=arr.length,item;item=arr[i++];){
+//            console.log(item);
+//        }
+
+//        for(var i= 0,len=arr.length;i<len;i++){
+//            console.log(arr[i]);
+//        }
+
+        //alert(i);//i=10
+
+        //第二种循环方法：
+
+        //forin:获取一个对象或者数组中的每一项
+
+        //in操作符：在对象中的属性，返回true,不在对象中的属性，返回false
+        //如果是forin 循环()返回true，执行{}以内代码，反之，不执行{}代码
+        var arr=[1,2,3,4,5];
+        arr.name="我的数组";
+
+        for(var i in arr){
+            console.log(i+":"+arr[i]);
+        }
+    </script>
+</html>

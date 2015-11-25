@@ -1,0 +1,10 @@
+1.把自己fork的仓库克隆到本地
+git clone https://github.com/zhangrenyang/forktest.git
+2.进入这个仓库
+cd forktest
+3.添加原仓库地址
+git remote add teacher https://github.com/zhufengnodejs/forktest.git
+4.把原仓库的代码拉到本地
+git pull teacher master
+5.把本地拉下来的代码上传到本用户的项目下面
+git push origin master

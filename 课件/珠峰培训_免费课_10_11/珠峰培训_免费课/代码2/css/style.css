@@ -1,0 +1,6 @@
+@import "style2.css";
+.test {
+    width: 100px;
+    height: 100px;
+    background: red;
+}

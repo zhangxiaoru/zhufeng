@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="tab.css"/>
+</head>
+<body>
+<div id="tab">
+    <ul>
+        <li class="select">综艺</li>
+        <li>电视剧</li>
+        <li>电影</li>
+    </ul>
+    <div class="select">爸爸去哪儿</div>
+    <div>花千骨</div>
+    <div>夏洛克烦恼</div>
+</div>
+<script type="text/javascript">
+    var oTab = document.getElementById("tab");
+    var oLis = oTab.getElementsByTagName("li");
+    var oDivs = oTab.getElementsByTagName("div");
+    for(var i=0;i<oLis.length;i++){
+        oLis[i].zhufeng=i;
+        oLis[i].onmouseover=function(){
+            tabchange(this.zhufeng)
+        }
+    }
+    function tabchange(n){
+        for(var i=0;i<oLis.length;i++){
+            oLis[i].className="";
+            oDivs[i].className=""
+        }
+        oLis[n].className=oDivs[n].className="select"
+    }
+
+</script>
+</body>
+</html>

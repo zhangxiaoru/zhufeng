@@ -1,0 +1,86 @@
+1.我们以后能做什么
+
+    Web开端攻城狮/Web高级前端开发工程师
+
+    码子猴（挨踢民工）-程序猿
+
+    (运营\项目老大)-project manage-UI(user interface-psd)
+    -切图,html静态页面,css
+
+    javascript(js):
+
+        对页面进行动态操作-与后台交互-从后台返回数据填充页面
+
+2.前端包含知识体系：
+
+    最基础:
+
+        html(hypertext markup language:页面骨架)：
+            html4/html5/dhtml/xhtml
+            svg：做矢量图
+                矢量图：由计算机指令绘制而成
+                位图:由像素点点组成
+
+        css(cascading style sheet:页面修饰)
+
+        js(页面动作):操作前端页面，是页面有动态效果和用户交互
+
+    扩展:
+        移动端：手机\平板浏览器访问的网页\app嵌入的网页
+
+        nodejs:主要用来操作文件\架设服务器
+
+        前端：我们页面能看见的所有内容（包括与后端交互）
+        后端：主要用来处理数据
+
+3.常用浏览器:
+
+    360,360极速，搜狗，QQ，猎豹，瑞影
+
+    百度
+
+    chrome(必须用的浏览器)
+
+    PC（浏览器兼容）：
+        firefox（firebug）,IE（3%ie6）,opera,safari
+
+    移动端：
+        chrome\safari
+
+4.编译器：
+
+    eclipse/myeclipse(java),
+    sublime(php,前端)
+    dreamweaver(静态网页html+css)
+    vs2014(asp.net,c#,c++,c)
+    hbuilder(h5,c,c++,php)
+
+    editplus/ueditor(文本编辑器)
+
+    webstorm
+
+5.前端学习方法：
+
+    1:推荐网站：http://www.w3school.com.cn/css/css_background.asp
+
+    2.推荐书籍：
+        javascript高级程序设计第三版（人民邮电出版社）
+        看一章，打一章
+
+    3.帮助文档
+
+        api(application interface)
+
+        hd(help document)
+
+
+6.考试
+
+   考试安排：
+    1、上机题：必考:选项卡+99乘法表（时间40分钟）
+    2、上机题：选考:数组去重和数组冒泡排序 考过-100学费（时间20分钟）
+    3、笔试题：必考：笔试 》=80（含80分）可以-100学费（时间60分钟）
+    10月17号和18号下完课后，准备好就可以考试上机，（这两天只考试上机）
+    10月24，25号下完课后，开始考试上机和笔试（这两天上机和笔试都会考，而且全部都要考试）
+    10月27号全日制正式课开班（周二）
+    10月31号周末班正式课开班（周六）

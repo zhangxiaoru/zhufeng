@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+img{ width:200px; height:200px; display:block; margin:20px;}
+</style>
+</head>
+
+<body style="height:5000px;">
+http://www.nadoujp.com/uploads/131216/4-131216102132158.jpg
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466924.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466925.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466926.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466927.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg" src="default.gif">
+</body>
+</html>
+<script>
+	function offset(ele){
+		var t = ele.offsetTop;
+		var l = ele.offsetLeft;
+		var p = ele.offsetParent;
+		while(p){
+			if(window.navigator.userAgent.indexOf("MSIE 8")>-1){
+				t+= p.offsetTop;
+				l+= p.offsetLeft;
+			}else{
+				t+= p.offsetTop+ p.clientTop;
+				l+= p.offsetLeft+ p.clientLeft;
+			}
+			p = p.offsetParent;
+		}
+		return {l:l,t:t};
+
+	}
+	window.onload=function(){
+		var oImgs = document.getElementsByTagName("img");
+		for(var i=0;i<oImgs.length;i++){
+			var oImg = oImgs.item(i);
+			oImg.posi = offset(oImg).t+oImg.clientTop;
+		}
+
+		window.onscroll=function(){
+			for(var i=0;i<oImgs.length;i++){
+				var oImg = oImgs.item(i);
+				var winTop =document.documentElement.scrollTop||document.body.scrollTop+document.documentElement.clientHeight||document.body.clientHeight;
+				if(!oImg.onLoad&&oImg.posi<winTop){
+					loadImg(oImg);
+				}
+			}
+		}
+	}
+
+
+	function loadImg(oImg){
+		var tempImg = new Image;
+		tempImg.src = oImg.getAttribute("realImg")+"?"+Math.random;
+		tempImg.onload=function(){
+			oImg.src = this.src;
+			oImg.onLoad = true;
+		}
+		oImg.src ="o_loading.gif";
+	}
+
+
+
+</script>

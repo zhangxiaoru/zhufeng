@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+
+        #outer{
+            margin: 100px auto;
+            width: 500px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        #inner{
+            width: 2500px;
+            height: 300px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #inner div{
+            float: left;
+            width: 500px;
+            height: 300px;
+            background: #AFD400;
+            text-align: center;
+            font-size: 100px;
+            line-height: 300px;
+            font-weight: bold;
+        }
+       #left{
+            position: absolute;
+            left: 0;
+            top:130px;
+            cursor: pointer;
+        }
+        #right{
+            position: absolute;
+            right: 0;
+            top:130px;
+            cursor: pointer;
+        }
+        #btn{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            list-style: none;
+            width: 200px;
+            height: 50px;
+
+        }
+        #btn li{
+            float: left;
+            border-radius: 50%;
+            background: orange;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            margin: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #btn li.current{
+            background: red;
+
+        }
+    </style>
+</head>
+<body>
+
+<div id="outer">
+    <div id="inner">
+        <div>一</div>
+        <div style="background: blue">二</div>
+        <div style="background: green">三</div>
+        <div style="background: yellow">四</div>
+        <div style="background: pink">五</div>
+    </div>
+    <ul id="btn">
+        <li class="current">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+
+<div id="left">
+    <input type="button" value="向左" onclick="moveRight()"/>
+</div>
+<div id="right">
+    <input type="button" value="向右" onclick="moveLeft()"/>
+</div>
+</div>
+<script type="text/javascript">
+
+    var oInner = document.getElementById("inner");
+    var div1 = oInner.getElementsByTagName("div")[0];
+    oInner.appendChild(div1.cloneNode(true));
+    oInner.style.width=oInner.clientWidth+div1.clientWidth+"px";
+
+    var step = 0;
+    var oLis = document.getElementById("btn").getElementsByTagName("li");
+
+    function moveLeft(){
+        step++;
+        if(step>=6){
+            oInner.style.left=0;
+            step=1;
+        }else if(step == 5){
+            selectCurrent(oLis[0]);
+        }
+        animate(oInner,{left:-step*500},1000);
+        selectCurrent(oLis[step]);
+    }
+    function moveRight(){
+        step--;
+        if(step<0){
+            oInner.style.left=-2500+"px";
+            step=4;
+        }
+        animate(oInner,{left:-step*500},1000);
+        selectCurrent(oLis[step]);
+    }
+
+
+    for(var i=0;i<oLis.length;i++){
+        oLis[i].i = i;
+        oLis[i].onclick=function(){
+            step=this.i;
+            animate(oInner,{left:-this.i*500},1000,3);
+            selectCurrent(this);
+        }
+    }
+
+    function selectCurrent(ele){
+        DOM.addClass(ele,"current");
+        var siblings = DOM.siblings(ele);
+        for(var i=0;i<siblings.length;i++){
+            DOM.removeClass(siblings[i],"current");
+        }
+
+    }
+</script>
+<script src="tween20151122.js"></script>
+<script src="dom140326.js"></script>
+</body>
+</html>

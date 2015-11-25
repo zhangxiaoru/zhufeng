@@ -1,0 +1,42 @@
+html,body,ul,li{
+    margin: 0px;
+    padding: 0px;
+}
+ul li{
+    list-style: none;
+}
+#tab{
+    width: 500px;
+    margin: 50px auto;
+}
+#tab ul{
+    position: relative;
+    top: 1px;
+}
+#tab ul li{
+    float: left;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-right: 15px;
+    border: 1px solid gray;
+}
+#tab div{
+    display: none;
+    clear: both;
+    width:500px;
+    height: 100px;
+    line-height: 100px;
+    border: 1px solid gray;
+    text-align: center;
+    background: sandybrown;
+}
+#tab ul li.select{
+    border-bottom: 1px solid sandybrown;
+    background: sandybrown;
+}
+#tab div.select{
+    display: block;
+
+}

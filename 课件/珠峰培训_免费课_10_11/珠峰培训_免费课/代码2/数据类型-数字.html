@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+<script>
+//number,string,undeined,null,object(function),boolean
+
+    //1.undefined
+//        1.定义没有赋值
+//        2.作为对象的属性，没有声明或者没有赋值都是。
+//        3.作为函数的参数和返回值，没有传入参数或者函数没有返回
+
+    var a;
+
+    //alert(a);
+
+    var b={};
+
+    alert(b.c);
+
+    //2.null
+
+        //1.变量定义了，但是应该是null
+
+    //3.number
+        //1.数字类型：整数\小数
+        //2.NaN,不是一个数字
+        //3.isNaN(number)
+        //4.类型转换:把其他类型转化成指定类型
+                //强制：通过代码手段强行把其他数据类型转成数字
+                //非强制：通过某些代码的特定代码区把其他数据类型转成数字
+
+
+        // 4.强制：Number,parseInt,parseFloat
+            //Number:如果转化的是字符串只包含数字，返回数字
+//                   如果转化的字符串除了数字包含其他字符串，返回NaN
+
+            //parseInt:将数字\字符串强制转化成整数，当遇到非数字的字符，
+            //终止
+
+            //parseFloat:将数字\字符串强制转化成小数，当遇到非数字的字符，
+            //终止
+
+        //JS中不要做小数的四则运算，如果要做运算，保留相应的小数位数数字。
+
+        //JS数字转化成字符串
+//            1.数字.toString();
+//            2.数字+""
+
+</script>
+</html>
