@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #outer{
+            margin: 100px auto;
+            width: 550px;
+            height: 285px;
+            position: relative;
+            overflow: hidden;
+        }
+        #inner{
+            position: absolute;
+            width: 1650px;
+            height: 285px;
+            top: 0;
+            left:0;
+        }
+        #inner div{
+            width: 550px;
+            height: 285px;
+            float: left;
+        }
+        #btn{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            list-style: none;
+            width: 80px;
+        }
+        #btn li{
+            float: left;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        #btn li.current{
+            background: red;
+        }
+        #left{
+            width: 37px;
+            height: 64px;
+            position: absolute;
+            background: url("4.png") no-repeat;
+            left: 0;
+            top: 110px;
+            cursor: pointer;
+            display: block;
+        }
+        #right{
+            width: 37px;
+            height: 64px;
+            position: absolute;
+            background: url("3.png") no-repeat;
+            right: 0;
+            top: 110px;
+            cursor: pointer;
+            display: block;
+        }
+        /*#btn a:hover {
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+        }*/
+    </style>
+
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div><img src="1.jpg" alt=""/></div>
+        <div><img src="2.jpg" alt=""/></div>
+        <div><img src="3.jpg" alt=""/></div>
+    </div>
+    <ul id="btn">
+        <li class="current"></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div><a href="javascript:" id="left" onclick="moveLeft()"></a></div>
+    <div><a href="javascript:" id="right" onclick="moveRight()"></a></div>
+    <!--<a href="javascript:" id="left"></a>
+    <a href="javascript:" id="right"></a>-->
+</div>
+<script type="text/javascript">
+    var left = document.getElementById("left");
+    var right = document.getElementById("right");
+    var step =0;
+    var oInner = document.getElementById("inner");
+    var oDiv = oInner.getElementsByTagName("div");
+    oInner.appendChild(oDiv[0].cloneNode(true));
+    oInner.style.width=oInner.clientWidth+oInner.getElementsByTagName("div")[0].clientWidth+"px";
+
+    var oLis = document.getElementById("btn").getElementsByTagName("li");
+    function selectCurrent(ele){
+        DOM.addClass(ele,"current");
+        var siblings = DOM.siblings(ele);
+        for(var i=0;i<siblings.length;i++){
+            DOM.removeClass(siblings[i],"current");
+        }
+    }
+    function moveLeft(){
+        step--;
+        if(step<0){
+            oInner.style.left=-1650+"px";
+            step=2;
+        }
+        animate(oInner,{left:-step*550},1000,3);
+        selectCurrent(oLis[step]);
+
+        clearInterval(autoTimer);
+        autoTimer = window.setInterval(moveRight,2000);
+    }
+    function moveRight(){
+        step++;
+        if(step>3){
+            oInner.style.left=0;
+            step=1;
+            selectCurrent(oLis[step]);
+        }else if(step==3){
+            selectCurrent(oLis[0]);
+        }else{
+            selectCurrent(oLis[step]);
+        }
+        animate(oInner,{left:-step*550},1000,3);
+
+        clearInterval(autoTimer);
+        autoTimer = window.setInterval(moveRight,2000);
+    }
+    left.onclick=function(){
+        moveLeft();
+    }
+    right.onclick=function(){
+        moveRight();
+    }
+    for(var i=0;i<oLis.length;i++){
+
+        oLis[i].index = i;
+        oLis[i].onclick=function(){
+            step=this.index;
+            animate(oInner,{left:-this.index*550},1000,3);
+            selectCurrent(this);
+            clearInterval(autoTimer);
+            autoTimer = window.setInterval(moveRight,2000);
+
+        }
+    }
+    var autoTimer = window.setInterval(moveRight,2000);
+
+    /*for(var i=0;i<oDiv.length;i++){
+        oDiv[i].onmouseover=function() {
+            left.style.display = "block";
+            right.style.display = "block";
+            clearInterval(autoTimer);
+        }
+        oDiv[i].onmouseout=function(){
+            left.style.display="none";
+            right.style.display="none";
+            autoTimer = window.setInterval(moveRight,2000);
+        }
+    }*/
+
+</script>
+<script src="dom140326.js"></script>
+<script src="tween20151122.js"></script>
+</body>
+</html>

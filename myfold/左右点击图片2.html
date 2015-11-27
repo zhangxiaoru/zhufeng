@@ -117,8 +117,8 @@
     function moveRight(){
         step--;
         if(step<0){
-            oInner.style.left=-1600+"px";
-            step=oDiv.length;
+            oInner.style.left=-1650+"px";
+            step=oDiv.length-2;
         }
         animate(oInner,{left:-step*550},1000);
         selectCurrent(oLis[step]);
@@ -129,7 +129,7 @@
         oLis[i].i = i;
         oLis[i].onclick=function(){
             step=this.i;
-            animate(oInner,{left:-this.i*500},1000,3);
+            animate(oInner,{left:-this.i*550},1000,3);
             selectCurrent(this);
         }
     }

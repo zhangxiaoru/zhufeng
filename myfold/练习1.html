@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #div1{
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: red;
+            left: 100px;
+            top:10px;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript">
+    var div1 = document.getElementById("div1");
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr]);
+        }else{
+            if(attr=="opacity"){
+                var reg = /alpha\(opacity=(\d+)\)/;
+                var filter = ele.currentStyle.filter;
+                if(reg.test(filter)){
+                    return RegExp.$1/100;
+                }else{
+                    return 1;
+                }
+            }else{
+                return parseFloat(ele.currentStyle[attr]);
+            }
+        }
+    }
+    function setCss(ele,attr,val){
+        switch(attr){
+            case "height":
+            case "width":
+            case "left":
+            case "top":
+                ele.style[attr]=val+"px";
+            case "opacity":
+                ele.style[attr]=val;
+                ele.style.filter="alpha(opacity="+val*100+")";
+            default :
+                ele.style[attr]=val;
+        }
+
+    }
+    function animate(ele,oTarget,duration,callback){
+        var times = 0;
+        var interval = 15;
+        var oBegin={};
+        var oChange={};
+        for(var attr in oTarget){
+            var begin = getCss(ele,attr);
+            var change = oTarget[attr]-begin;
+            oBegin[attr]=begin;
+            oChange[attr]=change;
+        }
+        window.clearInterval(ele.timer);
+        function step(){
+            times+=interval;
+            if(times<duration){
+                for(var attr in oChange){
+                    var val = times/duration*oChange[attr]+oBegin[attr];
+                    setCss(ele,attr,val);
+                }
+            }else{
+                for(var attr in oTarget){
+                    setCss(ele,attr,oTarget[attr]);
+                }
+                window.clearInterval(ele.timer);
+                if(typeof callback =="function"){
+                    callback.call(ele);
+                }
+            }
+        }
+        ele.timer = window.setInterval(step,interval);
+    }
+
+    var obj={left:500,top:500,opacity:0.3,width:200,height:200};
+    div1.onclick=function(){
+        animate(div1,obj,2000);
+    }
+</script>
+</body>
+</html>
